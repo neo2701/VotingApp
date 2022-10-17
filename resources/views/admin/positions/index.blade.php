@@ -100,11 +100,12 @@
                                         <td class="border px-4 py-2">{{ $position->name }}</td>
                                         <td class="whitespace-nowrap border px-4 py-2">
                                             <div class="flex flex-row gap-2">
+                                                {{-- Edit Action --}}
                                                 <x-modal :open="$errors->getBag('edit.' . $position->id)->any()">
                                                     <x-slot name="trigger">
                                                         <button
-                                                            class="inline-block rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-700"
-                                                            type="menu"
+                                                            class="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white ring-blue-300 transition duration-150 ease-in-out hover:bg-blue-700 focus:border-blue-900 focus:outline-none focus:ring active:bg-blue-900 disabled:opacity-25"
+                                                            type="button"
                                                         >
                                                             <svg
                                                                 class="h-4 w-4"
@@ -173,11 +174,10 @@
                                                         </div>
                                                     </x-slot>
                                                 </x-modal>
+                                                {{-- Delete Action --}}
                                                 <x-modal>
                                                     <x-slot name="trigger">
-                                                        <button
-                                                            class="rounded bg-red-600 p-2 font-bold text-white hover:bg-red-700"
-                                                        >
+                                                        <x-danger-button type="button">
                                                             <svg
                                                                 class="h-4 w-4"
                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +191,7 @@
                                                                 />
                                                             </svg>
 
-                                                        </button>
+                                                        </x-danger-button>
                                                     </x-slot>
 
                                                     <x-slot name="content">
@@ -229,12 +229,9 @@
                                                                         Cancel
                                                                     </button>
 
-                                                                    <button
-                                                                        class="rounded-md bg-red-600 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white hover:bg-red-700"
-                                                                        type="submit"
-                                                                    >
+                                                                    <x-danger-button>
                                                                         Confirm
-                                                                    </button>
+                                                                    </x-danger-button>
                                                                 </div>
                                                             </form>
                                                         </div>
