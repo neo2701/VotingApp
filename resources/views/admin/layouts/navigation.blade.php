@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.elections.index')" :active="request()->routeIs('admin.elections.*')">
+                        {{ __('Elections') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.positions.index')" :active="request()->routeIs('admin.positions.*')">
                         {{ __('Positions') }}
                     </x-nav-link>
@@ -68,6 +71,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.elections.index')" :active="request()->routeIs('admin.elections.*')">
+                {{ __('Elections') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.positions.index')" :active="request()->routeIs('admin.positions.*')">
                 {{ __('Positions') }}
