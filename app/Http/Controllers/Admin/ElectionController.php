@@ -29,19 +29,14 @@ class ElectionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'starts_at' => 'required|date',
             'ends_at' => 'required|date|after:starts_at',
         ]);
 
-        Election::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'starts_at' => $request->starts_at,
-            'ends_at' => $request->ends_at,
-        ]);
+        Election::create($validated);
 
         return redirect()->route('admin.elections.index');
     }
@@ -55,19 +50,14 @@ class ElectionController extends Controller
 
     public function update(Request $request, Election $election)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'starts_at' => 'required|date',
             'ends_at' => 'required|date|after:starts_at',
         ]);
 
-        $election->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'starts_at' => $request->starts_at,
-            'ends_at' => $request->ends_at,
-        ]);
+        $election->update($validated);
 
         return redirect()->route('admin.elections.index');
     }
