@@ -15,6 +15,13 @@ class ElectionController extends Controller
         ]);
     }
 
+    public function show(Election $election)
+    {
+        return view('admin.elections.show', [
+            'election' => $election,
+        ]);
+    }
+
     public function create()
     {
         return view('admin.elections.create');
