@@ -17,37 +17,30 @@ class PositionController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validateWithBag('create_position', [
+        $validated = $request->validateWithBag('create', [
             'name' => 'required|string|max:50',
         ]);
 
         Position::create($validated);
 
-        return redirect()->route('admin.positions.index');
-    }
-
-    public function edit(Position $position)
-    {
-        return view('admin.positions.edit', [
-            'position' => $position,
-        ]);
+        return redirect()->route('admin.positions.index')->with('success', 'Position created successfully.');
     }
 
     public function update(Request $request, Position $position)
     {
-        $validated = $request->validateWithBag('update_position', [
+        $validated = $request->validateWithBag('edit.'.$position->id, [
             'name' => 'required|string|max:50',
         ]);
 
         $position->update($validated);
 
-        return redirect()->route('admin.positions.index');
+        return redirect()->route('admin.positions.index')->with('success', 'Position updated successfully.');
     }
 
     public function destroy(Position $position)
     {
         $position->delete();
 
-        return redirect()->route('admin.positions.index');
+        return redirect()->route('admin.positions.index')->with('success', 'Position deleted successfully.');
     }
 }

@@ -9,77 +9,88 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="border-b border-gray-200 bg-white p-6">
-                    <div class="flex justify-end">
-                        <div x-data="{ open: @js($errors->create_position->any()) }">
-                            <x-primary-button
-                                type="button"
-                                x-on:click="open=true;$nextTick(() => $refs.name.focus())"
-                            >
-                                Create Position
-                            </x-primary-button>
-                            <template x-teleport="body">
-                                <div
-                                    class="fixed inset-0 z-50 flex h-full w-full items-center justify-center bg-slate-400/50 backdrop-blur transition duration-300 ease-in-out"
-                                    id="create-position"
-                                    x-show="open"
-                                    x-transition
+                    {{-- Content here --}}
+                    @if (session('success'))
+                        <div class="mb-4 w-full rounded-md border border-green-600 bg-green-200 py-2 px-4">
+                            <div class="flex flex-row items-center gap-4">
+                                <svg
+                                    class="h-5 w-5 fill-green-700"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
                                 >
-                                    <div
-                                        class="w-full max-w-lg rounded-md border bg-white px-4 py-6 shadow-md"
-                                        x-on:click.outside="open=false;"
-                                    >
-                                        <span class="text-2xl font-semibold">Create Position</span>
-                                        <div class="mt-4">
-                                            <form
-                                                action="{{ route('admin.positions.store') }}"
-                                                method="post"
-                                            >
-                                                @csrf
-                                                <div>
-                                                    <x-input-label
-                                                        for="name"
-                                                        value="Name"
-                                                    />
-                                                    <x-text-input
-                                                        class="mt-1 block w-full"
-                                                        id="name"
-                                                        name="name"
-                                                        type="text"
-                                                        required
-                                                        x-ref="name"
-                                                        placeholder="Position Name"
-                                                        autocomplete="off"
-                                                    />
-                                                    <x-input-error
-                                                        class="mt-2"
-                                                        :messages="$errors->create_position->get('name')"
-                                                    />
-                                                </div>
-                                                <div class="mt-4 flex items-center justify-end gap-2">
-                                                    <a
-                                                        class="inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-200 focus:border-gray-900 focus:outline-none focus:ring active:bg-gray-400 disabled:opacity-25"
-                                                        href="#"
-                                                        x-on:click.prevent="open=false"
-                                                    >
-                                                        Cancel
-                                                    </a>
-                                                    <x-primary-button type="submit">
-                                                        Create
-                                                    </x-primary-button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+
+                                <span class="text-green-700">{{ session('success') }}</span>
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="flex justify-end">
+                        <x-modal :open="$errors->create->any()">
+                            <x-slot name="trigger">
+                                <x-primary-button type="button">
+                                    Create Position
+                                </x-primary-button>
+                            </x-slot>
+                            <x-slot name="content">
+                                <div class="w-full max-w-lg rounded-md border bg-white px-4 py-6 shadow-md">
+                                    <span class="text-2xl font-semibold">Create Position</span>
+                                    <div class="mt-4">
+                                        <form
+                                            action="{{ route('admin.positions.store') }}"
+                                            method="post"
+                                        >
+                                            @csrf
+                                            <div>
+                                                <x-input-label
+                                                    for="name"
+                                                    value="Name"
+                                                />
+                                                <x-text-input
+                                                    class="mt-1 block w-full"
+                                                    id="name"
+                                                    name="name"
+                                                    type="text"
+                                                    value="{{ old('name') }}"
+                                                    required
+                                                    placeholder="Position Name"
+                                                    autocomplete="off"
+                                                    x-effect="whenOpen(() => $el.focus())"
+                                                />
+                                                <x-input-error
+                                                    class="mt-2"
+                                                    :messages="$errors->create->get('name')"
+                                                />
+                                            </div>
+                                            <div class="mt-4 flex items-center justify-end gap-2">
+                                                <a
+                                                    class="inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-200 focus:outline-none focus:ring active:bg-gray-400 disabled:opacity-25"
+                                                    href="#"
+                                                    x-on:click.prevent="hide()"
+                                                >
+                                                    Cancel
+                                                </a>
+                                                <x-primary-button type="submit">
+                                                    Create
+                                                </x-primary-button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            </template>
-                        </div>
+                            </x-slot>
+                        </x-modal>
                     </div>
-
                     <div class="mt-4">
                         <table class="w-full table-fixed border-collapse">
                             <thead>
                                 <tr>
-                                    <th class="px-4 py-2 w-4/6">Name</th>
+                                    <th class="w-4/6 px-4 py-2">Name</th>
                                     <th class="px-4 py-2">Actions</th>
                                 </tr>
                             </thead>
@@ -87,52 +98,149 @@
                                 @foreach ($positions as $position)
                                     <tr>
                                         <td class="border px-4 py-2">{{ $position->name }}</td>
-                                        <td class="border px-4 py-2 whitespace-nowrap">
+                                        <td class="whitespace-nowrap border px-4 py-2">
                                             <div class="flex flex-row gap-2">
-                                                <a
-                                                    class="inline-block rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-700"
-                                                    href="{{ route('admin.positions.edit', $position) }}"
-                                                >
-                                                    <svg
-                                                        class="h-5 w-5"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 20 20"
-                                                        fill="currentColor"
-                                                    >
-                                                        <path
-                                                            d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"
-                                                        />
-                                                        <path
-                                                            d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"
-                                                        />
-                                                    </svg>
-                                                </a>
-                                                <form
-                                                    class="inline-block"
-                                                    action="{{ route('admin.positions.destroy', $position) }}"
-                                                    method="POST"
-                                                >
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button
-                                                        class="rounded bg-red-600 p-2 font-bold text-white hover:bg-red-700"
-                                                        type="submit"
-                                                    >
-                                                        <svg
-                                                            class="h-5 w-5"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 20 20"
-                                                            fill="currentColor"
+                                                <x-modal :open="$errors->getBag('edit.' . $position->id)->any()">
+                                                    <x-slot name="trigger">
+                                                        <button
+                                                            class="inline-block rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-700"
+                                                            type="menu"
                                                         >
-                                                            <path
-                                                                fill-rule="evenodd"
-                                                                d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
-                                                                clip-rule="evenodd"
-                                                            />
-                                                        </svg>
+                                                            <svg
+                                                                class="h-4 w-4"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                viewBox="0 0 20 20"
+                                                                fill="currentColor"
+                                                            >
+                                                                <path
+                                                                    d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"
+                                                                />
+                                                                <path
+                                                                    d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"
+                                                                />
+                                                            </svg>
+                                                        </button>
+                                                    </x-slot>
+                                                    <x-slot name="content">
+                                                        <div
+                                                            class="w-full max-w-lg rounded-md border bg-white px-4 py-6 shadow-md">
+                                                            <span class="text-2xl font-semibold">Update Position</span>
+                                                            <div class="mt-4">
+                                                                <form
+                                                                    action="{{ route('admin.positions.update', $position) }}"
+                                                                    method="post"
+                                                                >
+                                                                    @method('put')
+                                                                    @csrf
+                                                                    <div>
+                                                                        <x-input-label
+                                                                            for="name"
+                                                                            value="Name"
+                                                                        />
+                                                                        <x-text-input
+                                                                            class="mt-1 block w-full"
+                                                                            id="name"
+                                                                            name="name"
+                                                                            type="text"
+                                                                            value="{{ $position->name }}"
+                                                                            required
+                                                                            placeholder="Position Name"
+                                                                            autocomplete="off"
+                                                                            x-effect="whenOpen(() => $el.focus())"
+                                                                        />
+                                                                        <x-input-error
+                                                                            class="mt-2"
+                                                                            :messages="$errors
+                                                                                ->getBag('edit.' . $position->id)
+                                                                                ->get('name')"
+                                                                        />
+                                                                    </div>
+                                                                    <div
+                                                                        class="mt-4 flex items-center justify-end gap-2">
+                                                                        <a
+                                                                            class="inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-200 focus:outline-none focus:ring active:bg-gray-400 disabled:opacity-25"
+                                                                            href="#"
+                                                                            x-on:click.prevent="hide()"
+                                                                        >
+                                                                            Cancel
+                                                                        </a>
+                                                                        <x-primary-button type="submit">
+                                                                            Update
+                                                                        </x-primary-button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-modal>
+                                                <x-modal>
+                                                    <x-slot name="trigger">
+                                                        <button
+                                                            class="rounded bg-red-600 p-2 font-bold text-white hover:bg-red-700"
+                                                        >
+                                                            <svg
+                                                                class="h-4 w-4"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                viewBox="0 0 20 20"
+                                                                fill="currentColor"
+                                                            >
+                                                                <path
+                                                                    fill-rule="evenodd"
+                                                                    d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
+                                                                    clip-rule="evenodd"
+                                                                />
+                                                            </svg>
 
-                                                    </button>
-                                                </form>
+                                                        </button>
+                                                    </x-slot>
+
+                                                    <x-slot name="content">
+                                                        <div
+                                                            class="w-full max-w-md rounded-md border bg-white p-6 shadow-md">
+                                                            <span class="text-xl font-semibold">Are you sure you want to
+                                                                delete this position?
+                                                            </span>
+
+                                                            <div class="mt-4">
+                                                                <ul class="list-inside list-disc text-red-600">
+                                                                    <li>
+                                                                        You are about to delete position
+                                                                        <span
+                                                                            class="underline underline-offset-2">{{ $position->name }}</span>.
+                                                                    </li>
+                                                                    <li>
+                                                                        This action is irreversible.
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <form
+                                                                action="{{ route('admin.positions.destroy', $position) }}"
+                                                                method="POST"
+                                                            >
+                                                                @csrf
+                                                                @method('delete')
+
+                                                                <div class="mt-4 flex justify-end gap-2">
+                                                                    <!-- cancel button -->
+                                                                    <button
+                                                                        class="inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-200 focus:outline-none focus:ring active:bg-gray-400 disabled:opacity-25"
+                                                                        x-on:click.prevent="hide()"
+                                                                    >
+                                                                        Cancel
+                                                                    </button>
+
+                                                                    <button
+                                                                        class="rounded-md bg-red-600 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white hover:bg-red-700"
+                                                                        type="submit"
+                                                                    >
+                                                                        Confirm
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-modal>
+
                                             </div>
                                         </td>
                                     </tr>
