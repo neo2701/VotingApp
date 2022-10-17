@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Candidate extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'position_id',
+        'election_id',
+    ];
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 }

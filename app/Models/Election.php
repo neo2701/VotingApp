@@ -20,4 +20,9 @@ class Election extends Model
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
     ];
+
+    public function candidates()
+    {
+        return $this->hasMany(Candidate::class);
+    }
 }
