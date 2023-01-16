@@ -33,7 +33,9 @@ Route::middleware('admin')->prefix('/admin')->name('admin.')->group(function () 
 
     Route::resource('/positions', Admin\PositionController::class)
         ->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('/candidates', Admin\CandidateController::class);
+    Route::resource('/voters', Admin\VoterController::class);
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
