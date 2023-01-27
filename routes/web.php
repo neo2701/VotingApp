@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\Election;
+use App\Http\Controllers\VoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,5 +39,7 @@ Route::middleware('admin')->prefix('/admin')->name('admin.')->group(function () 
     Route::resource('/voters', Admin\VoterController::class);
 });
 
+Route::resource('/vote', VoteController::class);
+Route::resource('/election', Election\ElectionController::class);
 
 require __DIR__ . '/auth.php';
