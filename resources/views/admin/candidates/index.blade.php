@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="mx-auto sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="border-b border-gray-200 bg-white p-6">
                     {{-- Content --}}
@@ -47,9 +47,9 @@
 
                                 @foreach ($candidates as $candidate)
                                     <tr>
-                                        <td class="border px-4 py-2">{{ $candidate->name }}</td>
+                                        <td class="border px-6 py-2">{{ $candidate->name }}</td>
                                         <td class="border px-4 py-2">{{ $candidate->position->name }}</td>
-                                        <td class="border px-4 py-2">{{ $candidate->description }}</td>
+                                        <td class="border px-4 py-2 text-justify">{!! nl2br($candidate->description) !!}</td>
                                         <td class="border px-4 py-2">{{ $candidate->election->title }}</td>
                                         <td class="border px-4 py-2 ">
                                             <a class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-700 focus:border-gray-900 focus:outline-none focus:ring active:bg-gray-900 disabled:opacity-25"
