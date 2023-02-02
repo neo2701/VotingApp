@@ -22,7 +22,7 @@
         <div class="max-w-7xl mt-2 mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white text-center text-lg font-bold">
-                    {{ $election->title }}
+                    <a href="{{ route('election.show', $election) }}">{{ $election->title }}</a>
                 </div>
 
             </div>

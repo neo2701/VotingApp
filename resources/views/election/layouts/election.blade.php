@@ -17,7 +17,7 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
-        @include('election.layouts.navigation')
+        {{-- @include('election.layouts.navigation') --}}
 
         <!-- Page Heading -->
         @if (isset($header))
