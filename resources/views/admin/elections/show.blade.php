@@ -31,7 +31,7 @@
                         <div class="font-bold text-lg mt-2">
                             {{ $position->name }}
                         </div>
-                        <div class="grid md:grid-flow-col gap-3 sm:grid-flow-row mt-4">
+                        <div class="grid md:grid-flow-col gap-3 sm:grid-flow-row my-4">
                             @foreach ($position->candidates as $candidate)
                                 <div class="card   bg-white  shadow-xl hover:shadow">
 
@@ -44,7 +44,7 @@
                                     {{-- <div class="text-center font-normal text-lg">Kerala</div> --}}
 
                                     <hr class="mt-8">
-                                    <div class="flex p-2  place-content-center	">
+                                    <div class="flex p-5  place-content-center">
                                         <div class="text-center">
                                             <!-- Code block starts -->
                                             <div class="flex items-center">
@@ -62,10 +62,6 @@
                                     </div>
                                 </div>
                             @endforeach
-                        </div>
-                        <div class="mt-4">
-                            <button class="bg-gray-500 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full"
-                                type="submit">Vote</button>
                         </div>
                     @endforeach
 
