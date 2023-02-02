@@ -195,6 +195,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        // Migration Providers
+        NsCreed\MigrationPath\ServiceProvider::class,
+
     ],
 
     /*

@@ -10,11 +10,17 @@ class Position extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'election_id',
     ];
 
     public function candidates()
     {
         return $this->hasMany(Candidate::class);
+    }
+
+    public function election()
+    {
+        return $this->belongsTo(Election::class);
     }
 }

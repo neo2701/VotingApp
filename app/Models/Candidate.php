@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Candidate extends Model
 {
     use HasFactory;
@@ -16,7 +17,7 @@ class Candidate extends Model
         'election_id',
 
     ];
-
+    protected $appends = ['votes'];
     public function position()
     {
         return $this->belongsTo(Position::class);
@@ -24,5 +25,11 @@ class Candidate extends Model
     public function election()
     {
         return $this->belongsTo(Election::class);
+    }
+
+    public function getVotesAttribute()
+    {
+        $votes = $this->hasMany(Vote::class)->get();
+        return $this->attributes['votes'] = $votes;
     }
 }

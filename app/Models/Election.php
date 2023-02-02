@@ -32,6 +32,11 @@ class Election extends Model
         return $this->hasMany(Voter::class);
     }
 
+    public function positions()
+    {
+        return $this->hasMany(Position::class);
+    }
+
     public function getStatusAttribute()
     {
         if ($this->starts_at->isFuture()) {

@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('votes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('election_id')->constrained();
-            $table->foreignId('voter_id')->constrained()->nullable();
-            $table->foreignId('candidate_id')->constrained();
-            $table->timestamps();
+        Schema::table('elections', function (Blueprint $table) {
+            $table->string('banner_image')->nullable();
+            //
         });
     }
 
@@ -29,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('votes');
+        Schema::table('elections', function (Blueprint $table) {
+            //
+        });
     }
 };

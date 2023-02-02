@@ -32,6 +32,7 @@ Route::middleware('admin')->prefix('/admin')->name('admin.')->group(function () 
     Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
 
     Route::resource('/elections', Admin\ElectionController::class);
+    Route::delete('/elections/{election}/votes', [Admin\ElectionController::class, 'deleteVotes'])->name('elections.reset');
 
     Route::resource('/positions', Admin\PositionController::class)
         ->only(['index', 'store', 'update', 'destroy']);
@@ -40,6 +41,9 @@ Route::middleware('admin')->prefix('/admin')->name('admin.')->group(function () 
 });
 
 Route::resource('/vote', VoteController::class);
+
+Route::get('/election/{id}/vote', [Election\ElectionController::class, 'voteindex'])->name('election.vote');
+Route::post('/election/{id}/vote', [Election\ElectionController::class, 'vote'])->name('election.vote.store');
 Route::resource('/election', Election\ElectionController::class);
 
 require __DIR__ . '/auth.php';

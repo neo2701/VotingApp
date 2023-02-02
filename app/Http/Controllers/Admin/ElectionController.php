@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Election;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 
 class ElectionController extends Controller
@@ -67,5 +68,11 @@ class ElectionController extends Controller
         $election->delete();
 
         return redirect()->route('admin.elections.index');
+    }
+
+    public function deleteVotes(Election $election)
+    {
+        Vote::where('election_id', $election->id)->delete();
+        return redirect()->route('admin.elections.index')->with('success', 'Election votes deleted successfully.');
     }
 }

@@ -18,12 +18,15 @@
                                 :value="old('name', $candidate->name)" required autofocus />
                             <x-input-error class="mt-2" :messages="$errors->get('name')" />
                         </div>
+
                         <div class="mt-4">
                             <x-input-label for="position" value="Position" />
                             <select name="position" id="position"
                                 class="block w-full px-4 py-3 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 @foreach ($positions as $position)
-                                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                    <option value="{{ $position->id }}">{{ $position->name }}
+                                        ({{ $position->election()->get()->first()->title }})
+                                    </option>
                                 @endforeach
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('position')" />

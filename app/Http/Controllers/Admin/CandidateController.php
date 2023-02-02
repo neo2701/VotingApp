@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\Position;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 
 class CandidateController extends Controller
@@ -62,6 +63,7 @@ class CandidateController extends Controller
             'position_id' => $validated['position'],
             'election_id' => $validated['election'],
         ];
+        // dd($store);
         Candidate::create($store);
         return redirect()->route('admin.candidates.index')->with('success', 'Candidate created successfully.');
     }
@@ -120,7 +122,7 @@ class CandidateController extends Controller
             'position_id' => $validated['position'],
             'election_id' => $validated['election'],
         ];
-
+        // dd($validated, $store);
         // dd($validated);
         $candidate->update($store);
 
@@ -138,5 +140,11 @@ class CandidateController extends Controller
         //
         $candidate->delete();
         return redirect()->route('admin.candidates.index')->with('success', 'Candidate deleted successfully.');
+    }
+
+    public function deleteVotes(Election $election)
+    {
+        Vote::where('election_id', $election->id)->delete();
+        return redirect()->route('admin.elections.index')->with('success', 'Votes deleted successfully.');
     }
 }

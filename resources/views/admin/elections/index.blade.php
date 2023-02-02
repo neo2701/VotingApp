@@ -5,8 +5,17 @@
         </h2>
     </x-slot>
 
+
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            {{-- flash data --}}
+            @if (session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-5 rounded relative mt-4 mb-4"
+                    role="alert">
+                    <strong class="font-bold">Success!</strong>
+                    <span class="block sm:inline">{{ session('success') }}</span>
+                </div>
+            @endif
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="border-b border-gray-200 bg-white p-6">
                     {{-- Content --}}
@@ -54,6 +63,17 @@
                                                     class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-700 focus:border-gray-900 focus:outline-none focus:ring active:bg-gray-900 disabled:opacity-25"
                                                     type="submit">
                                                     Delete
+                                                </button>
+                                            </form>
+                                            <form class="inline-block"
+                                                action="{{ route('admin.elections.reset', $election) }}" method="POST"
+                                                onsubmit="return confirm('Are you sure?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button
+                                                    class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-700 focus:border-gray-900 focus:outline-none focus:ring active:bg-gray-900 disabled:opacity-25"
+                                                    type="submit">
+                                                    Reset
                                                 </button>
                                             </form>
                                         </td>

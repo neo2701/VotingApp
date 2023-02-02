@@ -46,6 +46,17 @@
                                                     x-effect="whenOpen(() => $el.focus())" />
                                                 <x-input-error class="mt-2" :messages="$errors->create->get('name')" />
                                             </div>
+                                            <div class="mt-4">
+                                                <x-input-label for="election" value="Election" />
+                                                <select name="election_id" id="election"
+                                                    class="block w-full px-4 py-3  rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                                    @foreach ($elections as $election)
+                                                        <option value="{{ $election->id }}">{{ $election->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <x-input-error class="mt-2" :messages="$errors->get('position')" />
+                                            </div>
                                             <div class="mt-4 flex items-center justify-end gap-2">
                                                 <a class="inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest ring-gray-300 transition duration-150 ease-in-out hover:bg-gray-200 focus:outline-none focus:ring active:bg-gray-400 disabled:opacity-25"
                                                     href="#" x-on:click.prevent="hide()">
@@ -65,7 +76,8 @@
                         <table class="w-full table-fixed border-collapse ">
                             <thead>
                                 <tr>
-                                    <th class="w-4/6 px-4 py-2">Name</th>
+                                    <th class="px-4 py-2">Name</th>
+                                    <th class="px-4 py-2">Election</th>
                                     <th class="px-4 py-2">Actions</th>
                                 </tr>
                             </thead>
@@ -74,8 +86,9 @@
 
 
                                 @foreach ($positions as $position)
-                                    <tr class="text-center">
+                                    <tr class="text-center align-center">
                                         <td class="border px-4 py-2">{{ $position->name }}</td>
+                                        <td class="border px-4 py-2">{{ $position->election->title }}</td>
                                         <td class="whitespace-nowrap border px-4 py-2">
                                             <div class="flex flex-row gap-2">
                                                 {{-- Edit Action --}}
@@ -116,6 +129,25 @@
                                                                             :messages="$errors
                                                                                 ->getBag('edit.' . $position->id)
                                                                                 ->get('name')" />
+                                                                    </div>
+                                                                    <div class="mt-4">
+                                                                        <x-input-label for="election"
+                                                                            value="Election" />
+                                                                        <select name="election_id" id="election"
+                                                                            class="block w-full px-4 py-3  rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                                                            @foreach ($elections as $election)
+                                                                                <option
+                                                                                    @php
+if ($election->id == $position->election_id) {
+                                                                                        echo 'selected="selected"';
+                                                                                    } @endphp
+                                                                                    value="{{ $election->id }}">
+                                                                                    {{ $election->title }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        <x-input-error class="mt-2"
+                                                                            :messages="$errors->get('position')" />
                                                                     </div>
                                                                     <div
                                                                         class="mt-4 flex items-center justify-end gap-2">

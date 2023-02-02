@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Election;
 use App\Models\Election;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Vote;
 
 class ElectionController extends Controller
 {
@@ -51,8 +52,10 @@ class ElectionController extends Controller
     public function show(Election $election)
     {
         //
+        // session()->flash('success', 'Election created successfully.');
         return view('election.show', [
             'election' => $election,
+
 
         ]);
     }
@@ -89,5 +92,29 @@ class ElectionController extends Controller
     public function destroy(Election $election)
     {
         //
+    }
+
+    public function voteindex($id)
+    {
+        $election = Election::find($id);
+        // dd($election);
+        return view('election.vote.index', [
+            'election' => $election,
+        ]);
+    }
+
+    public function vote(Request $request, $id)
+    {
+        // $election = Election::find($id);
+        $validate = $request->validate([
+            'position' => 'required|exists:positions,id',
+            'candidate' => 'required|exists:candidates,id',
+        ]);
+
+        $vote = new Vote;
+        $vote->election_id = $id;
+        $vote->candidate_id = $request->candidate;
+        $vote->save();
+        return redirect()->route('election.show', $id)->with('success', 'You have successfully voted!');
     }
 }
