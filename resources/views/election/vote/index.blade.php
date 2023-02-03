@@ -45,8 +45,9 @@
                                 @method('post')
                                 @csrf
                                 <div class="font-bold text-lg mt-2">
-                                    {{ $position->name }}
+                                    {{-- {{ $position->name }} --}}
                                 </div>
+                                <input type="hidden" name="position" value="{{ $position->id }}">
                                 <div class="grid md:grid-flow-col gap-3 sm:grid-flow-row mt-4">
                                     @foreach ($position->candidates as $candidate)
                                         <div class="card   bg-white  shadow-xl hover:shadow">
@@ -66,8 +67,7 @@
                                                         <div class="flex items-center">
                                                             <div
                                                                 class="bg-white dark:bg-gray-100 rounded-full w-4 h-4 flex flex-shrink-0 justify-center items-center relative">
-                                                                <input type="hidden" name="position"
-                                                                    value="{{ $candidate->position_id }}">
+
                                                                 <input aria-labelledby="rad{{ $candidate->id }}"
                                                                     value="{{ $candidate->id }}" type="radio"
                                                                     name="candidate" id="rad{{ $candidate->id }}"

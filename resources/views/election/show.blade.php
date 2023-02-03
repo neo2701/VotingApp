@@ -47,9 +47,9 @@
                         <hr class="mt-2">
                         {{-- foreach positions --}}
                         @foreach ($election->positions as $position)
-                            <div class="font-bold text-lg mt-2">
+                            {{-- <div class="font-bold text-lg mt-2">
                                 {{ $position->name }}
-                            </div>
+                            </div> --}}
 
                             {{-- foreach candidates --}}
                             <div class="grid md:grid-flow-col gap-3 sm:grid-flow-row mt-4">

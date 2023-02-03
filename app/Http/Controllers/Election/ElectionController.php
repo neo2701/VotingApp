@@ -105,16 +105,19 @@ class ElectionController extends Controller
 
     public function vote(Request $request, $id)
     {
-        // $election = Election::find($id);
+
+        $election = Election::find($id);
         $validate = $request->validate([
             'position' => 'required|exists:positions,id',
             'candidate' => 'required|exists:candidates,id',
         ]);
-
+        // dd($validate);
         $vote = new Vote;
-        $vote->election_id = $id;
-        $vote->candidate_id = $request->candidate;
+        $vote->election_id = $election->id;
+        $vote->candidate_id = $validate['candidate'];
         $vote->save();
-        return redirect()->route('election.show', $id)->with('success', 'You have successfully voted!');
+        return view('election.vote.success', [
+            'election' => $election,
+        ]);
     }
 }

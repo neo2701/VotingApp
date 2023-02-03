@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+Created and developed by Nindya Pramana (Neo)
+Instagram : https://www.instagram.com/neo_2201/
+Github : https://www.github.com/neo2701
+-->
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
